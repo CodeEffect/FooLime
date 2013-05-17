@@ -1,0 +1,4 @@
+[
+    { "keys": ["f5"], "command": "foo_lime" },
+    { "keys": ["shift+f5"], "command": "foo_lime", "args": {"action": "control"} }
+]
