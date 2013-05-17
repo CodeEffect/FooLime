@@ -40,16 +40,6 @@ class FooLime(sublime_plugin.TextCommand):
             self.control()
 
     def selectTunes(self):
-        if not self.folder:
-            self.folder = self.getSettings().get(
-                "current_folder",
-                os.path.dirname(os.path.abspath(__file__))
-            )
-        if not self.folder or not os.path.isdir(self.folder):
-            self.folder = self.getSettings().get(
-                "home_folder",
-                os.path.dirname(os.path.abspath(__file__))
-            )
         self.listMusic(self.folder)
         self.addFolderOptions()
         self.show_quick_panel(self.items, self.handleSelect)
@@ -188,6 +178,11 @@ class FooLime(sublime_plugin.TextCommand):
             ])
 
     def listMusic(self, path):
+        if not path:
+            path = self.getSettings().get(
+                "current_folder",
+                None
+            )
         if not path or not os.path.isdir(path):
             path = self.getSettings().get(
                 "home_folder",
@@ -196,9 +191,12 @@ class FooLime(sublime_plugin.TextCommand):
         if "%" in path:
             path = os.path.expandvars(path)
         self.items = []
+        if path[-1] == os.sep:
+            path = path[-1]
+        if len(path) is 2 and path[1] is ":":
+            path += "\\"
+            os.chdir(path)
         self.folder = path
-        if self.folder[-1] == os.sep:
-            self.folder = self.folder[-1]
         for f in os.listdir(path):
             if os.path.isdir(os.path.join(path, f)):
                 self.items.append([f, "Folder"])
