@@ -27,7 +27,7 @@ repository:
 
 ## Default key bindings ##
 
-`f5` - Open the quick panel and browse for files and folders
+`f5` - Open the quick panel and browse for files and folders  
 `shift+f5` - Control foobar: prev/next track, volume up/down, pause, quit
 
 ## License ##
